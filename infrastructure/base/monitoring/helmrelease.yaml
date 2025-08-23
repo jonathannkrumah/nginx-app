@@ -97,11 +97,20 @@ spec:
           requests:
             cpu: 250m
           limits:
-            memory: 2048Mi
+            memory: 1008Mi
         storageSpec:
           volumeClaimTemplate: null
           persistentVolumeClaim:
             claimName: prometheus-pvc
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: topology.kubernetes.io/zone
+                      operator: In
+                      values:
+                        - us-east-1a
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:

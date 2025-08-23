@@ -1,5 +1,5 @@
 resources:
   - "namespace.yaml"
   - nginx-ingress.yaml
-  - nginx-tailscale.yaml
+  #- nginx-tailscale.yaml
   - nginx-helmrelease.yaml

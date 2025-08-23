@@ -42,7 +42,7 @@ spec:
       logLevel: warning
       extraEnvVars:
       - name:  TZ
-        value: ${TIMEZONE}
+        value: "Africa/Accra"
       defaultVolumesToFsBackup: true
     credentials:
       existingSecret: minio-credentials

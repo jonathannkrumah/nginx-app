@@ -1,0 +1,50 @@
+# apps/nginx-app.yaml
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nginx-app
+  namespace: nginx-app
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: nginx
+      version: 16.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 5m
+  values:
+    replicaCount: 3
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: nginx
+              topologyKey: kubernetes.io/hostname
+    service:
+      type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-app
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: nginx.${CLUSTER_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-app
+                port:
+                  number: 80

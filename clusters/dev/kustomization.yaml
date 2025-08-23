@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - flux-system-source.yaml
   - flux-system-kustomization.yaml
-  - ../../REPOS
+  - repos.yaml
   - apps.yaml
   - infrastructure.yaml

@@ -98,13 +98,15 @@ spec:
             cpu: 250m
           limits:
             memory: 2048Mi
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: gp2
-              resources:
-                requests:
-                  storage: 100Gi
+      storageSpec:
+        volumeClaimTemplate:
+        spec:
+          storageClassName: gp3   
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 100Gi 
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:

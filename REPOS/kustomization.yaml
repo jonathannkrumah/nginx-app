@@ -1,2 +1,2 @@
 resources:
-  - prometheus-community
+  - prometheus-community.yaml

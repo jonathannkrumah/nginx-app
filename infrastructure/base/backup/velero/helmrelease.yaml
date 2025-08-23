@@ -33,22 +33,19 @@ spec:
       backupStorageLocation:
         - name: default
           provider: aws
-          bucket: velero-infrastructure
+          bucket: velero-infrastructure12456546
           config:
-            region: minio
+            region: us-east-1
             s3Url: http://${IP_RYLOTH_TAILSCALE}:9000
             s3ForcePathStyle: true
       uploaderType: restic
       logLevel: warning
       extraEnvVars:
-        TZ: ${TIMEZONE}
+      - name:  TZ
+        value: ${TIMEZONE}
       defaultVolumesToFsBackup: true
     credentials:
-      secretContents:
-        cloud: |
-          [default]
-          aws_access_key_id=${VELERO_ACCESS_KEY}
-          aws_secret_access_key=${VELERO_SECRET_KEY}
+      existingSecret: cloud-credentials
     backupsEnabled: true
     snapshotsEnabled: false
     deployNodeAgent: true

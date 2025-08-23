@@ -14,9 +14,9 @@ spec:
         name: vmware-tanzu
         namespace: flux-system
   install:
-    crds: "Create" # Install CRDs during first deployment
+    crds: "Create" 
   upgrade:
-    crds: "Create"  # Ensure CRDs are installed/upgraded if missing
+    crds: "Create"  
   values:
     image:
       repository: velero/velero
@@ -35,7 +35,7 @@ spec:
           bucket: velero-infrastructure
           config:
             region: minio
-            s3Url: http://a066bb0aa3d234739a169b8597a2e4bb-2104269866.us-east-1.elb.amazonaws.com:9000
+            s3Url: http://minio.backup-storage.svc.cluster.local:9000
             s3ForcePathStyle: true
       uploaderType: restic
       logLevel: warning

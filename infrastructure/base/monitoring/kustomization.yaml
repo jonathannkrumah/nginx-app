@@ -3,5 +3,5 @@ resources:
   - ./externalsecret.yaml
   - ./alertmanagerconfig.yaml
   - ./helmrelease.yaml
-  - ./scrapeconfig.yaml
+ # - ./scrapeconfig.yaml
   

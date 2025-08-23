@@ -8,8 +8,8 @@ metadata:
 spec:
   interval: 1h
   chartRef:
-    kind: OCIRepository
-    name: kube-prometheus-stack
+    kind: HelmChart
+    name: prometheus-community
     namespace: flux-system
   install:
     remediation:

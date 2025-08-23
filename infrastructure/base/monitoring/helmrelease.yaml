@@ -99,8 +99,9 @@ spec:
           limits:
             memory: 2048Mi
         storageSpec:
-           persistentVolumeClaim:
-           claimName: prometheus-pvc
+          volumeClaimTemplate: null
+          persistentVolumeClaim:
+            claimName: prometheus-pvc
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:

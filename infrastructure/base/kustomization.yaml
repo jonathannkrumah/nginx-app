@@ -1,3 +1,5 @@
 resources:
   - ../../REPOS
+  - ./backup
   - ./monitoring
+  

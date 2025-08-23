@@ -1,3 +1,4 @@
 resources:
   - prometheus-community.yaml
   - nginx.yaml
+  - vmware-tanzu.yaml

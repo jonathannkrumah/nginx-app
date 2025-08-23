@@ -51,10 +51,10 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: ceph-block
+              storageClassName: gp3
               resources:
                 requests:
-                  storage: 1Gi
+                  storage: 100Gi
     kubeApiServer:
       serviceMonitor:
         selector:

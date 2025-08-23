@@ -1,7 +1,7 @@
 resources:
   - "namespace.yaml"
   - ./externalsecret.yaml
-  - ./prometheus-pvc.yaml
+  #- ./prometheus-pvc.yaml
   #- ./alertmanagerconfig.yaml
   - ./helmrelease.yaml
   #- ./scrapeconfig.yaml

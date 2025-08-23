@@ -1,3 +1,7 @@
 resources:
   - "namespace.yaml"
+  - ./externalsecret.yaml
+  - ./alertmanagerconfig.yaml
+  - ./helmrelease.yaml
+  - ./scrapeconfig.yaml
   

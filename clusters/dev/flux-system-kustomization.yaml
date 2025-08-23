@@ -11,5 +11,5 @@ spec:
   path: ./clusters/dev
   interval: 3m
   prune: true
-  validation: client
+  #validation: client
   timeout: 2m

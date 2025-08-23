@@ -99,12 +99,8 @@ spec:
           limits:
             memory: 2048Mi
         storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: gp3
-              resources:
-                requests:
-                  storage: 100Gi
+           persistentVolumeClaim:
+           claimName: prometheus-pvc
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:

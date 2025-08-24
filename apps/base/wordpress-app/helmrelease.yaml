@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   interval: 15m
   install:
-    createNamespace: true
+    createNamespace: false
   values:
     mariadb:
       enabled: false
@@ -26,9 +26,7 @@ spec:
       database: "wordpress"
       user: "admin"
       existingSecret: "mariadb-secret1"
-      existingSecretUserKey: "mariadb-username"
       existingSecretPasswordKey: "mariadb-password"
-
     settings:
       wordpress:
         admin:
@@ -37,12 +35,10 @@ spec:
           passwordKey: "wordpress-admin-password"
           emailKey: "wordpress-admin-email"
         tablePrefix: "wp_"
-
     service:
       type: LoadBalancer
-    
     storage:
-      className: longhorn  
+      className: longhorn
       accessModes:
         - ReadWriteOnce
       size: 10Gi

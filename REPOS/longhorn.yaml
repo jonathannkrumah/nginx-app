@@ -1,0 +1,11 @@
+---
+# HelmRepository for Longhorn charts
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: longhorn
+  namespace: flux-system   # cluster-level namespace recommended
+spec:
+  interval: 30m
+  url: https://charts.longhorn.io
+  timeout: 3m

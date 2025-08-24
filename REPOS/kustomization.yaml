@@ -4,3 +4,4 @@ resources:
   - vmware-tanzu.yaml
   - groundhog2k.yaml
   - bitnami.yaml
+  - longhorn.yaml

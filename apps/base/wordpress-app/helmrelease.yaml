@@ -18,19 +18,19 @@ spec:
   interval: 15m
   valuesFrom:
     - kind: Secret
-      name: mariadb-secret
+      name: mariadb-secret1
       valuesKey: rootPassword
       targetPath: mariadb.auth.rootPassword
     - kind: Secret
-      name: mariadb-secret
-      valuesKey: user
+      name: mariadb-secret1
+      valuesKey: username
       targetPath: mariadb.auth.username
     - kind: Secret
-      name: mariadb-secret
+      name: mariadb-secret1
       valuesKey: password
       targetPath: mariadb.auth.password
     - kind: Secret
-      name: mariadb-secret
+      name: mariadb-secret1
       valuesKey: database
       targetPath: mariadb.auth.database
   values:

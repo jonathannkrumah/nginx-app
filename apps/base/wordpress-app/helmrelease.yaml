@@ -22,11 +22,11 @@ spec:
     mariadb:
       enabled: false
     externalDatabase:
-      host: "mariadb.databases.svc.cluster.local" 
+      host: "mariadb.databases.svc.cluster.local"
       port: 3306
       database: "wordpress"
-      username: "admin"
       existingSecret: "mariadb-secret1"
+      existingSecretUserKey: "mariadb-username"
       existingSecretPasswordKey: "mariadb-password"
 
     settings:

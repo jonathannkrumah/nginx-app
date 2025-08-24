@@ -1,3 +1,4 @@
 resources:
   - ./nginx-app
-  - ./wordpress-app
+  #- ./wordpress-app
+  - ./databases

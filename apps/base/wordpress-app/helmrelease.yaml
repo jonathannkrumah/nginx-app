@@ -16,26 +16,14 @@ spec:
         namespace: flux-system
       interval: 5m
   interval: 15m
-  valuesFrom:
-    - kind: Secret
-      name: mariadb-secret1
-      valuesKey: rootPassword
-      targetPath: mariadb.auth.rootPassword
-    - kind: Secret
-      name: mariadb-secret1
-      valuesKey: username
-      targetPath: mariadb.auth.username
-    - kind: Secret
-      name: mariadb-secret1
-      valuesKey: password
-      targetPath: mariadb.auth.password
-    - kind: Secret
-      name: mariadb-secret1
-      valuesKey: database
-      targetPath: mariadb.auth.database
   values:
     mariadb:
       enabled: true
+      auth:
+        rootPassword: "rootadmin12345"
+        username: "admin"
+        password: "Admin12345"
+        database: "wordpress"
       persistence:
         enabled: true
         size: 10Gi

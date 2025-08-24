@@ -29,6 +29,15 @@ spec:
       existingSecret: "mariadb-secret1"
       existingSecretPasswordKey: "mariadb-password"
 
+    settings:
+      wordpress:
+        admin:
+          existingSecret: "mariadb-secret1"
+          userKey: "wordpress-admin-user"
+          passwordKey: "wordpress-admin-password"
+          emailKey: "wordpress-admin-email"
+        tablePrefix: "wp_"
+
     service:
       type: LoadBalancer
     

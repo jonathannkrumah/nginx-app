@@ -2,3 +2,4 @@ resources:
   - prometheus-community.yaml
   - nginx.yaml
   - vmware-tanzu.yaml
+  - groundhog2k.yaml

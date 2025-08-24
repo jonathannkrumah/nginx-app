@@ -8,7 +8,6 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=https://groundhog2k.github.io/helm-charts/
       chart: wordpress
       version: 0.14.2
       sourceRef:
@@ -17,49 +16,34 @@ spec:
         namespace: flux-system
       interval: 5m
   interval: 15m
-  maxHistory: 2
-  timeout: 20m
-  install:
-    remediation:
-      retries: 300
-  upgrade:
-    remediation:
-      retries: 300
+  valuesFrom:
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: rootPassword
+      targetPath: mariadb.auth.rootPassword
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: user
+      targetPath: mariadb.auth.username
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: password
+      targetPath: mariadb.auth.password
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: database
+      targetPath: mariadb.auth.database
   values:
-    image:
-      repository: wordpress
-      tag: 6.1.1-php7.4-apache@sha256:7e46cf3373751b6d62b7a0fc3a7d6686f641a34a2a0eb18947da5375c55fd009
-    externalDatabase:
-      host: ${SECRET_MARIADB_SERVER}
-      name: ${SECRET_WP_0_MARIADB_DB}
-      user: ${SECRET_WP_0_MARIADB_USER}
-      password: ${SECRET_WP_0_MARIADB_PASS}
+    mariadb:
+      enabled: true
+      persistence:
+        enabled: true
+        size: 10Gi
+        storageClass: gp2
     service:
       type: LoadBalancer
-    # ingress:
-    #   enabled: true
-    #   className: external
-    #   annotations:
-    #     cert-manager.io/cluster-issuer: "letsencrypt-production"
-    #   hosts:
-    #     - host: "${SECRET_WP_0_DOMAIN}"
-    #       paths:
-    #         - path: /
-    #           pathType: Prefix
-    #     - host: "www.${SECRET_WP_0_DOMAIN}"
-    #       paths:
-    #         - path: /
-    #           pathType: Prefix
-    #   tls:
-    #     - hosts:
-    #         - "${SECRET_WP_0_DOMAIN}"
-    #         - "www.${SECRET_WP_0_DOMAIN}"
-    #       secretName: "wordpress-0-tls"
     storage:
-      persistentVolumeClaimName: wordpress-0-nfs
-    mariadb:
-      enabled: false
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+      className: gp2
+      accessModes:
+        - ReadWriteOnce
+      size: 10Gi

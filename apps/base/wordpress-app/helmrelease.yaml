@@ -16,22 +16,38 @@ spec:
         namespace: flux-system
       interval: 5m
   interval: 15m
+  install:
+    createNamespace: true
   values:
     mariadb:
-      enabled: true
-      auth:
-        rootPassword: "rootadmin12345"
-      username: "admin"
-      password: "Admin12345"
+      enabled: false
+    externalDatabase:
+      host: "mariadb.databases.svc.cluster.local" 
+      port: 3306
       database: "wordpress"
-      persistence:
-        enabled: true
-        size: 10Gi
-        storageClass: gp2
+      username: "admin"
+      existingSecret: "mariadb-secret1"
+      existingSecretPasswordKey: "mariadb-password"
+
     service:
       type: LoadBalancer
+    
     storage:
-      className: gp2
+      className: longhorn  
       accessModes:
         - ReadWriteOnce
       size: 10Gi
+    
+    # Optional: Configure ingress instead of LoadBalancer
+    # ingress:
+    #   enabled: true
+    #   className: "nginx"  # or your ingress class
+    #   hosts:
+    #     - host: wordpress.blkh.dev
+    #       paths:
+    #         - path: /
+    #           pathType: Prefix
+    #   tls:
+    #     - secretName: wordpress-tls
+    #       hosts:
+    #         - wordpress.blkh.dev

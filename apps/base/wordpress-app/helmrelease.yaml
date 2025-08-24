@@ -4,7 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: wordpress
-  namespace: wordpress
+  namespace: wordpress-app
 spec:
   chart:
     spec:

@@ -1,4 +1,4 @@
 resources:
-  - namespace.yaml
+  #- namespace.yaml
   - pvc.yaml
   - helmrelease.yaml

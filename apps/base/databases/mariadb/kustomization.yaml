@@ -1,4 +1,5 @@
 resources:
   - namespace.yaml
+ # - secret.sops.yaml
   - helmrelease.yaml
-  - secret.sops.yaml
+  

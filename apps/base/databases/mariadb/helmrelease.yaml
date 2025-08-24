@@ -31,7 +31,7 @@ spec:
       storageClass: longhorn
     architecture: standalone
     auth:
-      existingSecret: mariadb-secret
+      existingSecret: mariadb-secret1
       database: main
     persistence:
       storageClass: longhorn
@@ -46,6 +46,7 @@ spec:
         enabled: true
       prometheusRule:
         enabled: true
+
     # networkPolicy:
     #   enabled: true
     #   metrics:

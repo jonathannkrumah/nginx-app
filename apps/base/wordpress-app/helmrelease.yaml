@@ -1,5 +1,47 @@
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name: wordpress
+#   namespace: wordpress-app
+# spec:
+#   chart:
+#     spec:
+#       chart: wordpress
+#       version: 0.14.2
+#       sourceRef:
+#         kind: HelmRepository
+#         name: groundhog2k
+#         namespace: flux-system
+#   interval: 15m
+#   install:
+#     createNamespace: false
+#   values:
+#     mariadb:
+#       enabled: false
+#     externalDatabase:
+#       host: "mariadb.databases.svc.cluster.local"
+#       port: 3306
+#       database: "wordpress"
+#       username: "admin"
+#       password: "Admin12345"
+#     settings:
+#       wordpress:
+#         admin:
+#           existingSecret: "mariadb-secret1"
+#           userKey: "wordpress-admin-user"
+#           passwordKey: "wordpress-admin-password"
+#           emailKey: "wordpress-admin-email"
+#         tablePrefix: "wp_"
+#     service:
+#       type: LoadBalancer
+#     storage:
+#       className: longhorn
+#       accessModes:
+#         - ReadWriteOnce
+#       size: 10Gi
+
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -14,44 +56,41 @@ spec:
         kind: HelmRepository
         name: groundhog2k
         namespace: flux-system
+      interval: 5m
   interval: 15m
+  maxHistory: 2
+  timeout: 20m
   install:
-    createNamespace: false
+    remediation:
+      retries: 300
+  upgrade:
+    remediation:
+      retries: 300
   values:
-    mariadb:
-      enabled: false
+    image:
+      repository: wordpress
+      tag: 6.1.1-php7.4-apache@sha256:7e46cf3373751b6d62b7a0fc3a7d6686f641a34a2a0eb18947da5375c55fd009
+
+    ## External MariaDB connection
     externalDatabase:
-      host: "mariadb.databases.svc.cluster.local"
-      port: 3306
-      database: "wordpress"
-      username: "admin"
-      password: "Admin12345"
-    settings:
-      wordpress:
-        admin:
-          existingSecret: "mariadb-secret1"
-          userKey: "wordpress-admin-user"
-          passwordKey: "wordpress-admin-password"
-          emailKey: "wordpress-admin-email"
-        tablePrefix: "wp_"
+      host: mariadb.databases.svc.cluster.local
+      name: wordpress
+      user: admin
+      password: Admin12345
     service:
-      type: LoadBalancer
+      ype: LoadBalancer
+
     storage:
       className: longhorn
       accessModes:
         - ReadWriteOnce
       size: 10Gi
-    
-    # Optional: Configure ingress instead of LoadBalancer
-    # ingress:
-    #   enabled: true
-    #   className: "nginx"  # or your ingress class
-    #   hosts:
-    #     - host: wordpress.blkh.dev
-    #       paths:
-    #         - path: /
-    #           pathType: Prefix
-    #   tls:
-    #     - secretName: wordpress-tls
-    #       hosts:
-    #         - wordpress.blkh.dev
+
+    ## Disable built-in MariaDB
+    mariadb:
+      enabled: false
+
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"

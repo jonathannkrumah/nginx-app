@@ -15,24 +15,12 @@ spec:
         name: groundhog2k
         namespace: flux-system
   interval: 5m
-  valuesFrom:
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-root-password
-      targetPath: auth.rootPassword
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-username
-      targetPath: auth.username
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-password
-      targetPath: auth.password
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-database
-      targetPath: auth.database
   values:
+    auth:
+      rootPassword: rootadmin12345
+      username: admin
+      password: Admin12345
+      database: wordpress
     persistence:
       enabled: true
       size: 10Gi
@@ -56,26 +44,17 @@ spec:
         name: groundhog2k
         namespace: flux-system
   interval: 5m
-  valuesFrom:
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-username
-      targetPath: externalDatabase.user
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-password
-      targetPath: externalDatabase.password
-    - kind: Secret
-      name: mariadb-secret
-      valuesKey: mariadb-database
-      targetPath: externalDatabase.name
   values:
     externalDatabase:
       host: mariadb.wordpress-app.svc.cluster.local
+      user: admin
+      password: Admin12345
+      name: wordpress
     service:
       type: LoadBalancer
     storage:
-      className: gp2
       accessModes:
         - ReadWriteOnce
+      className: gp2
       size: 10Gi
+

@@ -3,6 +3,47 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
+  name: mariadb
+  namespace: wordpress-app
+spec:
+  chart:
+    spec:
+      chart: mariadb
+      version: 0.9.1
+      sourceRef:
+        kind: HelmRepository
+        name: groundhog2k
+        namespace: flux-system
+  interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-root-password
+      targetPath: auth.rootPassword
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-username
+      targetPath: auth.username
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-password
+      targetPath: auth.password
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-database
+      targetPath: auth.database
+  values:
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: gp2
+    service:
+      type: ClusterIP
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
   name: wordpress
   namespace: wordpress-app
 spec:
@@ -14,20 +55,23 @@ spec:
         kind: HelmRepository
         name: groundhog2k
         namespace: flux-system
-      interval: 5m
-  interval: 15m
+  interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-username
+      targetPath: externalDatabase.user
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-password
+      targetPath: externalDatabase.password
+    - kind: Secret
+      name: mariadb-secret
+      valuesKey: mariadb-database
+      targetPath: externalDatabase.name
   values:
-    mariadb:
-      enabled: true
-      auth:
-        rootPassword: "rootadmin12345"
-        username: "admin"
-        password: "Admin12345"
-        database: "wordpress"
-      persistence:
-        enabled: true
-        size: 10Gi
-        storageClass: gp2
+    externalDatabase:
+      host: mariadb.wordpress-app.svc.cluster.local
     service:
       type: LoadBalancer
     storage:

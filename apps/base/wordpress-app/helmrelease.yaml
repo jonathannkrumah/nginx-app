@@ -24,9 +24,8 @@ spec:
       host: "mariadb.databases.svc.cluster.local"
       port: 3306
       database: "wordpress"
-      user: "admin"
-      existingSecret: "mariadb-secret1"
-      existingSecretPasswordKey: "mariadb-password"
+      username: "admin"
+      password: "Admin12345"
     settings:
       wordpress:
         admin:

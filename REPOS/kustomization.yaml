@@ -3,4 +3,4 @@ resources:
   - nginx.yaml
   - vmware-tanzu.yaml
   - groundhog2k.yaml
-  #- bitnami.yaml
+  - bitnami.yaml

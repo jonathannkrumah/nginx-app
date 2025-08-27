@@ -32,11 +32,9 @@ spec:
       backupStorageLocation:
         - name: default
           provider: aws
-          bucket: velero-infrastructure
+          bucket: my-velero-backups-12345
           config:
-            region: minio
-            s3Url: http://minio.backup-storage.svc.cluster.local:9000
-            s3ForcePathStyle: true
+            region: us-east-1
       uploaderType: restic
       logLevel: warning
       extraEnvVars:
@@ -44,7 +42,7 @@ spec:
         value: "Africa/Accra"
       defaultVolumesToFsBackup: true
     credentials:
-      existingSecret: minio-credentials
+      existingSecret: cloud-credentials
     backupsEnabled: true
     snapshotsEnabled: false
     deployNodeAgent: true
